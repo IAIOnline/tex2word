@@ -1,5 +1,9 @@
 <!-- удобная автоматическая конвертация LaTeX в word -->
 
+To use
+
+[IAIOnline.github.io/tex2word](IAIOnline.github.io/tex2word)
+
 
 запуск
 ```[bash]
