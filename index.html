@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <script src="coi-serviceworker.js"></script>
+    <meta charset="UTF-8">
+    <title>LaTeX to Word IDE</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "wasm-pandoc": "./package/index.js",
+        "@bjorn3/browser_wasi_shim": "https://cdn.jsdelivr.net/npm/@bjorn3/browser_wasi_shim@0.3.0/dist/index.js",
+        "docx-preview": "https://esm.sh/docx-preview"
+      }
+    }
+    </script>
+
+<body>
+
+    <div class="app-container">
+        <main class="editor-area">
+            <section class="pane left-pane">
+                <div class="pane-header">LaTeX Исходник</div>
+                <textarea id="texInput" spellcheck="false" placeholder="\section{Заголовок}..."></textarea>
+            </section>
+
+            <section class="pane right-pane">
+                <div class="pane-header">Предпросмотр Word</div>
+                <div id="document-preview">
+                    <p class="placeholder-text">Здесь появится готовый документ...</p>
+                </div>
+                <button id="saveBtn" class="floating-save" style="display: none;">💾 Сохранить .docx</button>
+            </section>
+        </main>
+
+        <footer class="controls-bar">
+            <div class="loading-zone">
+                <div id="loadingContainer" style="display: none;">
+                    <span id="percentText">0%</span>
+                    <div class="progress-mini"><div id="progressBar"></div></div>
+                </div>
+                <span id="status">Ожидание...</span>
+            </div>
+            
+            <div class="actions">
+                <input type="file" id="fileInput" accept=".tex" hidden>
+                <button class="secondary-btn" onclick="document.getElementById('fileInput').click()">Открыть файл</button>
+                <button id="convertBtn" class="primary-btn" disabled>Сконвертировать</button>
+            </div>
+        </footer>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/mml', 'output/chtml'] },
+            mml: { force: true }
+        };
+    </script>
+
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/mml-chtml.js"></script>
+</body>
+</html>
