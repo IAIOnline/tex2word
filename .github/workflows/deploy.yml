@@ -1,0 +1,26 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master] # или master, смотря какая у вас основная
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 
+        uses: actions/checkout@v4
+        with:
+          lfs: true # КРИТИЧЕСКИ ВАЖНО: включаем поддержку LFS
+
+      - name: Checkout LFS objects
+        run: git lfs checkout # Принудительно выкачиваем реальные файлы
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: . # Публикуем всё содержимое корня
+          branch: gh-pages # Публикуем в специальную ветку gh-pages
